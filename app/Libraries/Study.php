@@ -19,16 +19,39 @@ class Study {
     
     public function CalculateCost(){
         $arr_costs = [];
+        $year = date('Y');
+        
         for($i=1; $i<= $this->nb_months; $i++){
-            // month ram cost = nb studies per day x 30
-            $ram_cost = ($this->nb_studies * 30 / 1000 * 0.5) * $this->ram_hour_cost * 24 * 30;
-            $storage_cost = $this->nb_studies * 30 * $this->study_cost;
+            
+            // Determining the month
+            $month = ($i % 12);
+            $new_year=false;
+            if($month==0){
+                $month=12;
+                $new_year=true;
+            }
+            
+            // RAM cost
+            $ram_cost = ($this->nb_studies / 1000 * 0.5) * $this->ram_hour_cost * 24;
+
+            // get the number of days for the current month
+            $nb_days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+            
+            // Storage cost
+            $storage_cost = $this->nb_studies * $nb_days_in_month * $this->study_cost;
+            
+            // Result
             $arr_costs[] = [
-                'month'=> substr(date('F', mktime(0, 0, 0, $i, 10)), 0, 3).' '.date('Y'),
+                'month'=> substr(date('F', mktime(0, 0, 0, $i, 10)), 0, 3).' '.$year,
                 'nb_studies'=> number_format ( $this->nb_studies ,0 , '.' , ',' ),
                 'cost' => number_format ( $ram_cost + $storage_cost ,2 , '.' , ',' )
             ];
+            
+            // Nb studies growth
             $this->nb_studies += $this->nb_studies * $this->growth / 100;
+            
+            // Increment for new year
+            if($new_year) $year++;
         }
         
         return $arr_costs;
