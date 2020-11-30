@@ -44,7 +44,7 @@ class Study {
             $arr_costs[] = [
                 'month'=> substr(date('F', mktime(0, 0, 0, $i, 10)), 0, 3).' '.$year,
                 'nb_studies'=> number_format ( $this->nb_studies ,0 , '.' , ',' ),
-                'cost' => number_format ( $ram_cost + $storage_cost ,2 , '.' , ',' )
+                'cost' => '$'.number_format ( $ram_cost + $storage_cost ,2 , '.' , ',' )
             ];
             
             // Nb studies growth
