@@ -68,17 +68,17 @@
                             
                                         <div class="form-group">
                                             <label>Number of Study per day</label>
-                                            <input type="text" class="form-control" name="nb_study" id="nb_study">
+                                            <input type="number" class="form-control checknum" name="nb_study" id="nb_study">
                                         </div>
                             
                                         <div class="form-group">
                                             <label>% growth per month</label>
-                                            <input type="text" class="form-control" name="growth" id="growth">
+                                            <input type="number" class="form-control checknum" name="growth" id="growth">
                                         </div>
                             
                                         <div class="form-group">
                                             <label>Number of months</label>
-                                            <input type="text" class="form-control" name="nb_months" id="nb_months">
+                                            <input type="number" class="form-control checknum" name="nb_months" id="nb_months">
                                         </div>
 
                                         <div class="form-group">
@@ -140,8 +140,14 @@
         	  $("#jqGrid").setGridParam({ 'data': response}). trigger("reloadGrid");              
           });
 		          
-      });    
-        </script>
+      });
+
+      document.querySelector(".checknum").addEventListener("keypress", function (evt) {
+   		if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57){
+    		evt.preventDefault();
+    	}
+   	  });    
+    </script>
 
     </body>
 </html>
