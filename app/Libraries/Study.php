@@ -20,8 +20,8 @@ class Study {
     public function CalculateCost(){
         $arr_costs = [];
         $year = date('Y');
-        
-        for($i=1; $i<= $this->nb_months; $i++){
+        $cur_month = date('m');
+        for($i=$cur_month; $i< ($cur_month+$this->nb_months); $i++){
             
             // Determining the month
             $month = ($i % 12);
@@ -37,6 +37,10 @@ class Study {
             // get the number of days for the current month
             $nb_days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
             
+            if($i==$cur_month){
+                $nb_days_in_month -= (int) date('d');
+            }
+                        
             // Storage cost
             $storage_cost = $this->nb_studies * $nb_days_in_month * $this->study_cost;
             
